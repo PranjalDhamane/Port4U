@@ -50,8 +50,7 @@ def display_financial_metrics(mean_return, volatility, sharpe_ratio, var):
     }
     
     df_metrics = pd.DataFrame(metrics)
-    st.table(df_metrics)
-
+    return df_metrics
 # Function to run single ticker analysis
 def run_single_ticker_analysis(ticker, start_date, end_date):
     try:
@@ -62,11 +61,11 @@ def run_single_ticker_analysis(ticker, start_date, end_date):
         var = calculate_var(stock_returns)
 
         # Display financial metrics
-        display_financial_metrics(mean_return, volatility, sharpe, var)
+        df_metrics = display_financial_metrics(mean_return, volatility, sharpe, var)
 
         # Display candlestick chart
         plot_candlestick_chart(stock_data, ticker)
-
+        return df_metrics
     except Exception as e:
         st.error(f"Error: {e}")
 

@@ -4,3 +4,4 @@ venv/
 # Ignore other common files/folders
 __pycache__/
 *.pyc
+*.env

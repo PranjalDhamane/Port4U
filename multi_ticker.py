@@ -90,6 +90,9 @@ def display_financial_metrics(metrics_df):
     st.write("### Metrics Table for Multiple Ticker Analysis")
     st.table(metrics_df)
 
+    df_metrics = pd.DataFrame(metrics_df)
+    return df_metrics
+
 # Function to run multiple ticker analysis
 def run_multiple_ticker_analysis(tickers, start_date, end_date):
     try:
@@ -119,7 +122,7 @@ def run_multiple_ticker_analysis(tickers, start_date, end_date):
         metrics_df = pd.DataFrame(metrics)
         
         # Display metrics table
-        display_financial_metrics(metrics_df)
+        df_metrics = display_financial_metrics(metrics_df)
 
         # Monte Carlo Simulation
         results, weights_record = monte_carlo_simulation(mean_returns, cov_matrix)
@@ -129,6 +132,7 @@ def run_multiple_ticker_analysis(tickers, start_date, end_date):
 
         # Display candlestick charts
         plot_candlestick_charts_for_multiple_tickers(stock_data)
-
+        return df_metrics
+    
     except Exception as e:
         st.error(f"Error: {e}")
