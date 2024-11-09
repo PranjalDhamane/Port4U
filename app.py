@@ -4,16 +4,16 @@ from single_ticker import run_single_ticker_analysis
 from multi_ticker import run_multiple_ticker_analysis
 
 def main():
-    st.title("Portfolio Optimization App")
+    st.title(" Stock Portfolio Optimization App")
 
     # User selection for single ticker or multiple ticker analysis
-    analysis_type = st.radio("Choose analysis type:", ('Single Ticker Analysis', 'Multiple Ticker Analysis'))
+    analysis_type = st.radio("Choose analysis type:", ('Single Ticker Analysis', 'Double Ticker Analysis'))
 
     # Render input boxes conditionally based on analysis type
     if analysis_type == 'Single Ticker Analysis':
         ticker = st.text_input("Enter a stock ticker (e.g., AAPL):")  # Single input for one ticker
     
-    elif analysis_type == 'Multiple Ticker Analysis':
+    elif analysis_type == 'Double Ticker Analysis':
         ticker_1 = st.text_input("Enter the first stock ticker (e.g., AAPL):")
         ticker_2 = st.text_input("Enter the second stock ticker (e.g., MSFT):")
 
@@ -28,7 +28,7 @@ def main():
             else:
                 st.error("Please enter a valid stock ticker.")
         
-        elif analysis_type == 'Multiple Ticker Analysis':
+        elif analysis_type == 'Double Ticker Analysis':
             tickers = [ticker_1.strip().upper(), ticker_2.strip().upper()]
             if all(tickers):  # Check if both tickers are entered
                 run_multiple_ticker_analysis(tickers, start_date, end_date)

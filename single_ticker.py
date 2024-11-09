@@ -69,3 +69,4 @@ def run_single_ticker_analysis(ticker, start_date, end_date):
 
     except Exception as e:
         st.error(f"Error: {e}")
+
