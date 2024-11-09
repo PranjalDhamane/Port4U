@@ -1,6 +1,6 @@
-# Portfolio Optimization App
+# Port4U
 
-The **Portfolio Optimization App** is a web-based tool built with Streamlit for analyzing and optimizing stock portfolios. It supports both single-ticker analysis and multi-ticker portfolio optimization, using key financial metrics to assess performance, manage risk, and enable informed investment decisions.
+The **Port4U** is a web-based tool built with Streamlit for analyzing and optimizing stock portfolios. It supports both single-ticker analysis and multi-ticker portfolio optimization, using key financial metrics to assess performance, manage risk, and enable informed investment decisions.
 
 ## Table of Contents
 - [Features](#features)
