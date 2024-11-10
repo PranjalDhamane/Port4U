@@ -32,6 +32,16 @@ def calculate_var(returns, confidence_level=0.95):
     var = norm.ppf(1 - confidence_level) * std_dev - mean
     return var
 
+# Function to display financial metrics
+def display_financial_metrics(mean_return, volatility, sharpe_ratio, var):
+    metrics = {
+        "Metric": ["Expected Annual Return", "Annual Volatility (Risk)", "Sharpe Ratio", "Value at Risk (VaR)"],
+        "Value": [f"{mean_return:.4f}", f"{volatility:.4f}", f"{sharpe_ratio:.4f}", f"{var:.4f}"]
+    }
+    
+    df_metrics = pd.DataFrame(metrics)
+    return df_metrics
+
 # Function to plot candlestick chart
 def plot_candlestick_chart(data, ticker):
     if "Volume" not in data.columns:
@@ -42,15 +52,6 @@ def plot_candlestick_chart(data, ticker):
     mpf.plot(data_ohlc, type='candle', volume=True, title=f'Candlestick chart for {ticker}', style='yahoo')
     st.pyplot(plt.gcf())
 
-# Function to display financial metrics
-def display_financial_metrics(mean_return, volatility, sharpe_ratio, var):
-    metrics = {
-        "Metric": ["Expected Annual Return", "Annual Volatility (Risk)", "Sharpe Ratio", "Value at Risk (VaR)"],
-        "Value": [f"{mean_return:.4f}", f"{volatility:.4f}", f"{sharpe_ratio:.4f}", f"{var:.4f}"]
-    }
-    
-    df_metrics = pd.DataFrame(metrics)
-    return df_metrics
 # Function to run single ticker analysis
 def run_single_ticker_analysis(ticker, start_date, end_date):
     try:
@@ -62,10 +63,11 @@ def run_single_ticker_analysis(ticker, start_date, end_date):
 
         # Display financial metrics
         df_metrics = display_financial_metrics(mean_return, volatility, sharpe, var)
-
+        
+    
         # Display candlestick chart
         plot_candlestick_chart(stock_data, ticker)
         return df_metrics
+    
     except Exception as e:
         st.error(f"Error: {e}")
-
