@@ -1,0 +1,6 @@
+__pycache__/
+portfolio_optimization_error.log/
+venv/
+# Ignore other common files/folders
+__pycache__/
+*.pyc
