@@ -20,6 +20,24 @@ def fetch_multiple_ticker_data(tickers, start, end):
         all_returns[ticker] = returns
     return all_data, pd.DataFrame(all_returns)
 
+# Additional metrics calculations
+def calculate_sortino_ratio(returns, mean_return, risk_free_rate=0.01):
+    downside_returns = returns[returns < 0]
+    downside_deviation = np.sqrt(np.mean(downside_returns ** 2)) * np.sqrt(252)
+    return (mean_return - risk_free_rate) / downside_deviation
+
+def calculate_max_drawdown(data):
+    cumulative_returns = (1 + data).cumprod()
+    rolling_max = cumulative_returns.cummax()
+    drawdown = (cumulative_returns - rolling_max) / rolling_max
+    return drawdown.min()
+
+def calculate_cagr(data):
+    cumulative_returns = (1 + data).cumprod()
+    total_return = cumulative_returns[-1]
+    num_years = len(data) / 252
+    return (total_return ** (1 / num_years)) - 1
+
 # Calculate financial metrics for multiple tickers
 def calculate_financial_metrics(returns, tickers, risk_free_rate=0.01, confidence_level=0.95):
     metrics = []
@@ -27,14 +45,20 @@ def calculate_financial_metrics(returns, tickers, risk_free_rate=0.01, confidenc
         mean_return = returns[ticker].mean() * 252
         volatility = returns[ticker].std() * np.sqrt(252)
         sharpe_ratio = (mean_return - risk_free_rate) / volatility
+        sortino_ratio = calculate_sortino_ratio(returns[ticker], mean_return, risk_free_rate)
         var = norm.ppf(1 - confidence_level) * returns[ticker].std() - returns[ticker].mean()
+        max_drawdown = calculate_max_drawdown(returns[ticker])
+        cagr = calculate_cagr(returns[ticker])
         
         metrics.append({
             'Ticker': ticker,
             'Expected Annual Return': mean_return,
             'Annual Volatility': volatility,
             'Sharpe Ratio': sharpe_ratio,
-            'VaR (95%)': var
+            'Sortino Ratio': sortino_ratio,
+            'VaR (95%)': var,
+            'Maximum Drawdown': max_drawdown,
+            'CAGR': cagr
         })
     return pd.DataFrame(metrics)
 
